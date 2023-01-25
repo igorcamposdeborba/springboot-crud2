@@ -47,6 +47,10 @@ public class Product {
 		this.price = price;
 		this.discount = discount;
 	}
+	public Product(String name, Double price, Double discount, Integer id) {
+		this(name, price, discount);
+		this.id = id;
+	}
 	
 	// Access methods
 	public Integer getId() {

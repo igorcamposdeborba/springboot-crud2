@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,4 +48,12 @@ public class ProductController {
 		return productRepository.findById(id);
 	}
 	
+	@PutMapping (path = "/update-by-id")
+	public Product update(@RequestParam String name, @RequestParam Double price, @RequestParam Double discount, @RequestParam Integer id) {
+		Product product = new Product(name, price, discount, id);
+		
+		productRepository.save(product);
+		
+		return product;
+	}
 }
