@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cod3r.exerciciossb.model.entities.Product;
 import br.com.cod3r.exerciciossb.model.repositories.ProductRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/api/products")
@@ -18,16 +19,14 @@ public class ProductController {
 	private ProductRepository productRepository; 
 	
 	@PostMapping
-	public @ResponseBody Product newProduct(@RequestParam String name, @RequestParam Double price) { // body da resposta do servidor (Product) e body da requisição
-		Product product = new Product(name, price);
+	public @ResponseBody Product newProduct(@Valid Product product) { // body da resposta do servidor (Product) e body da requisição. @Valid aceita só objeto com atributos válidos segundo as annotations da classe Product
 		
 		productRepository.save(product); // salvar produto no banco de dados. save é um método do CrudRepository no ProductRepository
-		
 		return product;
 	}
 	
-	@PostMapping (path = "/discount{percentage}")
-	public @ResponseBody Product newProduct(@RequestParam String name, @RequestParam Double price, @RequestParam(name = "percentage") Double discount) {
+	@PostMapping (path = "/discount{name}")
+	public @ResponseBody Product newProduct(@RequestParam(value = "name") String name, @RequestParam Double price, @RequestParam Double discount) {
 		Product product = new Product(name, price, discount);
 		
 		product.setDiscount(discount);
