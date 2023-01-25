@@ -76,5 +76,11 @@ public class ProductController {
 		productRepository.deleteById(id);
 	}
 	
+	@GetMapping (path = "find-by-name{partName}")
+	public Iterable<Product> findProductsByName(@RequestParam(value = "partName") String partName){
+		return productRepository.findByNameContaining(partName);
+		
+		
+	}
 	
 }
